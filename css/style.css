@@ -1,0 +1,125 @@
+/* Import fonts for themed modes */
+@import url('https://fonts.googleapis.com/css2?family=VT323&family=Courier+Prime&family=Press+Start+2P&display=swap');
+
+/* ============================================================== */
+/* --- BASE & GENERIC STYLES --- */
+/* ============================================================== */
+body { font-family: "Pixelated MS Sans Serif", "Arial"; -webkit-font-smoothing: none; font-size: 1rem; cursor: default; overflow: hidden; }
+.hidden { display: none !important; }
+
+/* Overlays & Pre-Boot */
+.scanline, #glitch-overlay, #pre-boot-screen, #boot-screen, #digital-rain, #shutdown-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; }
+.scanline { pointer-events: none; background: repeating-linear-gradient(0deg, rgba(0,0,0,0.3) 1px, transparent 1px, transparent 2px); animation: flicker 0.15s infinite; }
+#glitch-overlay { background-color: #0000a0; color: white; display: flex; justify-content: center; align-items: center; text-align: center; }
+#pre-boot-screen, #boot-screen { background: #000; padding: 20px; white-space: pre-wrap; }
+#pre-boot-screen { display: block; }
+.ascii-art { color: #00FF00; }
+.boot-options { margin-left: 20px; }
+.menu-item { cursor: pointer; padding: 5px; color: #00FF00; }
+.menu-item:hover { background-color: #00FF00; color: #000; }
+#boot-text::after { content: '_'; animation: blink 1s step-end infinite; }
+#shutdown-overlay { background-color: #000; display: flex; justify-content: center; align-items: center; color: #ccc; font-family: 'VT323', monospace; font-size: 1.5rem; opacity: 0; transition: opacity 3s ease-in-out; }
+
+/* Animations */
+@keyframes blink { 50% { opacity: 0; } }
+@keyframes flicker { 0% { opacity: 0.8; } 50% { opacity: 0.95; } 100% { opacity: 0.85; } }
+@keyframes shake { 10%, 90% { transform: translate3d(-1px, 0, 0); } 20%, 80% { transform: translate3d(2px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-4px, 0, 0); } 40%, 60% { transform: translate3d(4px, 0, 0); } }
+.shake { animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both; }
+@keyframes vhs-track { 0% { background-position: 0 0; } 100% { background-position: 0 -10px; } }
+.vhs-glitch { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; background: repeating-linear-gradient(0deg, rgba(0,0,0,0.5) 5px, rgba(255,255,255,0.2) 6px, rgba(0,0,0,0.5) 7px); background-size: 100% 10px; animation: vhs-track 0.1s linear infinite; opacity: 0.3; }
+
+/* Desktop, Icons, Taskbar, Start Menu */
+#desktop { width: 100vw; height: calc(100vh - 32px); position: relative; }
+.desktop-icon { position: absolute; display: flex; flex-direction: column; align-items: center; width: 90px; text-align: center; cursor: pointer; }
+.desktop-icon img { width: 48px; height: 48px; margin-bottom: 5px; }
+.desktop-icon span { padding: 2px 4px; font-size: 14px; }
+.desktop-icon:active span, .desktop-icon.selected span { border: 1px dotted; }
+#taskbar { position: fixed; bottom: 0; left: 0; width: 100%; z-index: 999; display: flex; align-items: stretch; padding: 2px; }
+#start-button { margin-right: 4px; font-weight: bold; }
+#start-button img { margin-right: 4px; }
+#taskbar-buttons { flex-grow: 1; padding: 2px; display: flex; align-items: center; gap: 2px; overflow: hidden; }
+#taskbar-buttons button { flex-shrink: 1; min-width: 60px; max-width: 150px; text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: flex; align-items: center; gap: 4px; }
+#clock { padding: 2px 8px; font-size: 14px; margin-left: 4px; align-self: center; }
+#start-menu { position: absolute; bottom: 100%; left: 0; width: 220px; z-index: 10000; display: flex; }
+.start-menu-sidebar { width: 30px; background: linear-gradient(to bottom, #000080, #1084d0); color: white; font-weight: bold; font-size: 1.5rem; writing-mode: vertical-lr; text-align: center; padding-left: 5px; }
+.start-menu-sidebar span:first-child { transform: rotate(180deg); }
+.start-menu-sidebar span:last-child { color: #808080; }
+ul.start-menu-items { list-style: none; padding: 2px; margin: 0; width: 100%; }
+ul.start-menu-items li { display: flex; align-items: center; padding: 5px 8px; position: relative; gap: 8px; }
+ul.start-menu-items li:hover { background: #0000a0; color: white; }
+ul.start-menu-items li.separator { border-top: 1px solid #808080; border-bottom: 1px solid white; height: 2px; padding: 0; margin: 2px 0; }
+li.has-submenu::after { content: ''; display: block; width: 0; height: 0; border: 4px solid transparent; border-left-color: black; position: absolute; right: 5px; }
+li.has-submenu:hover::after { border-left-color: white; }
+ul.submenu { display: none; position: absolute; left: 100%; top: -2px; z-index: 10001; }
+li.has-submenu:hover > ul.submenu { display: block; }
+
+/* Window styles */
+a, .internal-link { text-decoration: underline; cursor: pointer; }
+.window .title-bar { cursor: grab; display: flex; align-items: center; }
+.window .title-bar-text { font-weight: bold; flex-grow: 1; display: flex; align-items: center; gap: 4px; }
+.window .title-bar-text img { width: 16px; height: 16px; }
+.window .title-bar:active { cursor: grabbing; }
+.terminal-output { height: 200px; overflow-y: auto; white-space: pre-wrap; }
+.terminal-output p { margin: 0 0 5px 0; }
+.terminal-input { background: none; border: none; font-size: 1em; width: 100%; outline: none; }
+.file-explorer-window .window-body { padding: 0; }
+.file-explorer-window .files-list { list-style: none; padding: 4px; margin: 0; height: 200px; overflow-y: auto; }
+.file-explorer-window .files-list li { padding: 4px; cursor: pointer; display: flex; align-items: center; gap: 4px; }
+.file-explorer-window .files-list li:hover { background: #0000a0; color: white; }
+.file-explorer-window .status-bar { padding: 2px; }
+.run-dialog-body { display: flex; align-items: center; gap: 15px; padding: 15px; }
+.run-dialog-body img { width: 32px; height: 32px; }
+.run-dialog-buttons { display: flex; justify-content: center; gap: 10px; margin-top: 10px; }
+.properties-body { display: flex; flex-direction: column; gap: 10px; }
+.properties-body .field-row { justify-content: flex-start; }
+
+/* ============================================================== */
+/* --- CLASSIC '98 THEME --- */
+/* ============================================================== */
+body.theme-classic { background-color: #008080; }
+.theme-classic .scanline, .theme-classic #digital-rain, .theme-classic #glitch-overlay { display: none; }
+.theme-classic #desktop { background-image: url('../assets/images/desktop-bg.png'); }
+.theme-classic .desktop-icon span { color: white; }
+.theme-classic .desktop-icon:active span, .theme-classic .desktop-icon.selected span { background-color: #0000a0; border-color: white; }
+.theme-classic .window, .theme-classic #taskbar, .theme-classic #start-menu { font-family: "Pixelated MS Sans Serif", "Arial"; }
+.theme-classic .window-body { background-color: white; color: black; }
+.theme-classic a { color: #0000FF; }
+.theme-classic .terminal-input { color: black; font-family: "Pixelated MS Sans Serif", "Arial"; }
+.theme-classic .msdos-prompt .window-body { font-family: 'VT323', monospace; background: black; color: white; }
+.theme-classic .msdos-prompt .terminal-input { font-family: 'VT323', monospace; color: white; }
+
+/* ============================================================== */
+/* --- HACKER, VAPORWAVE, STEALTH, DEV-BIOS (Dark Modes) --- */
+/* ============================================================== */
+/* She always hated this color. Said it was depressing. I kept it anyway. */
+.theme-hacker, .theme-vaporwave, .theme-stealth, .theme-dev-bios { background-color: #000; font-family: 'VT323', monospace; }
+.theme-hacker #desktop, .theme-vaporwave #desktop, .theme-stealth #desktop, .theme-dev-bios #desktop { background-image: none; }
+.theme-hacker .desktop-icon span, .theme-vaporwave .desktop-icon span, .theme-stealth .desktop-icon span, .theme-dev-bios .desktop-icon span { color: #00FF00; }
+.theme-hacker .window-body, .theme-vaporwave .window-body, .theme-stealth .window-body, .theme-dev-bios .window-body { background-color: #000; color: #00FF00; }
+.theme-hacker a, .theme-vaporwave a, .theme-stealth a, .theme-dev-bios a { color: #00aaff; }
+
+/* --- HACKER MODE --- */
+.theme-hacker { cursor: text; }
+.theme-hacker #digital-rain { display: block !important; z-index: -1; }
+.theme-hacker .window { border: 1px solid #00FF00; }
+.theme-hacker .title-bar { display: none; }
+
+/* --- VAPORWAVE MODE --- */
+.theme-vaporwave { filter: hue-rotate(180deg) brightness(1.1); font-family: 'Press Start 2P', cursive; }
+.theme-vaporwave #desktop { background: linear-gradient(to bottom, #ff00ff, #00ffff); }
+.theme-vaporwave .window { text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff; }
+
+/* --- STEALTH THEME --- */
+.theme-stealth #desktop { background-color: #111; }
+.theme-stealth .desktop-icon { opacity: 0.1; }
+.theme-stealth .desktop-icon:hover { opacity: 1; }
+.theme-stealth #taskbar { display: none !important; }
+
+/* --- DEV BIOS THEME --- */
+.theme-dev-bios .desktop-icon { display: none; }
+.theme-dev-bios .desktop-icon[data-program="my_computer"],
+.theme-dev-bios .desktop-icon[data-program="my_documents"] { display: flex; }
+
+/* --- KONAMI THEME --- */
+.theme-konami { filter: invert(1); background-color: #fff; }
+.theme-konami #desktop { background-color: #fff; }

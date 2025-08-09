@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FORGOTTEN_BYTES_</title>
+    <link rel="stylesheet" href="https://unpkg.com/98.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Courier+Prime&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="theme-classic">
+
+    <!-- OVERLAYS (Used by JS for effects) -->
+    <div class="scanline hidden"></div>
+    <canvas id="digital-rain" class="hidden"></canvas>
+    <div id="glitch-overlay" class="hidden"></div>
+    <div id="shutdown-overlay" class="hidden"><p id="shutdown-message"></p></div>
+
+    <!-- PRE-BOOT SCREEN (The entry point) -->
+    <div id="pre-boot-screen">
+        <pre class="ascii-art">
+  ______                 _            ______       _       
+ |  ____|               | |          |  ____|     | |      
+ | |__ ___  _ __ ___  __| | ___ _ __ | |__   _   _| |_ ___ 
+ |  __/ _ \| '__/ _ \/ _` |/ _ \ '_ \|  __| | | | | __/ __|
+ | | | (_) | | |  __/ (_| |  __/ | | | |____| |_| | |_\__ \
+ |_|  \___/|_|  \___|\__,_|\___|_| |_|______|\__,_|\__|___/
+        </pre>
+        <div class="boot-options">
+            <p>SELECT_ROOT_MODE:</p>
+            <div class="menu-item" data-theme="classic">[0] CLASSIC_MODE (Windows 98) - Pure Nostalgia</div>
+            <div class="menu-item" data-theme="hacker">[1] HACKER_MODE.EXE - Minimal Terminal Interface</div>
+            <div class="menu-item" data-theme="vaporwave">[2] VAPORWAVE.VHS - Aesthetic Override Protocol</div>
+            <div class="menu-item" data-theme="stealth">[3] STEALTH_SHELL.GHOST - Minimal Access Mode</div>
+            <div class="menu-item" data-theme="dev-bios">[ESC] DEVELOPER_BIOS.SYS - Deep System Access</div>
+        </div>
+    </div>
+
+    <!-- BIOS BOOT SCREEN -->
+    <div id="boot-screen" class="hidden"><pre id="boot-text"></pre></div>
+
+    <!-- MAIN DESKTOP -->
+    <main id="desktop" class="hidden">
+        
+        <div class="desktop-icon" data-program="my_computer"><img src="assets/icons/my-computer.png" alt="My Computer"><span>My Computer</span></div>
+        <div class="desktop-icon" data-program="my_documents"><img src="assets/icons/my-documents.png" alt="My Documents"><span>My Documents</span></div>
+        <div class="desktop-icon" data-program="internet_explorer"><img src="assets/icons/internet-explorer.png" alt="Internet Explorer"><span>Internet Explorer</span></div>
+        <div class="desktop-icon" data-program="my_projects"><img src="assets/icons/folder.png" alt="My Projects"><span>My Projects</span></div>
+        <div class="desktop-icon" data-program="memories_txt"><img src="assets/icons/text-file.png" alt="Memories"><span>memories.txt</span></div>
+        <div class="desktop-icon" data-program="love_letters_doc"><img src="assets/icons/document.png" alt="Love Letters"><span>love_letters.doc</span></div>
+        <div class="desktop-icon" data-program="diary_html"><img src="assets/icons/html-file.png" alt="Diary"><span>diary.html</span></div>
+        <div class="desktop-icon" data-program="photos_folder"><img src="assets/icons/folder-pictures.png" alt="Photos"><span>photos</span></div>
+        <div class="desktop-icon" data-program="mixtape_mp3"><img src="assets/icons/audio-file.png" alt="Mixtape"><span>mixtape.mp3</span></div>
+        <div class="desktop-icon" data-program="my_first_website"><img src="assets/icons/html-file.png" alt="My First Website"><span>my_first_website</span></div>
+        <div class="desktop-icon" data-program="graduation_video_avi"><img src="assets/icons/video-file.png" alt="Graduation Video"><span>graduation_video.avi</span></div>
+        <div class="desktop-icon" data-program="source_code_folder"><img src="assets/icons/folder.png" alt="Source Code"><span>source_code</span></div>
+        <div class="desktop-icon" data-program="neural_dreams_exe"><img src="assets/icons/msdos.png" alt="Neural Dreams"><span>neural_dreams.exe</span></div>
+        <div class="desktop-icon" data-program="broken_hearts_folder"><img src="assets/icons/folder-corrupted.png" alt="Broken Hearts"><span>broken_hearts</span></div>
+        <div class="desktop-icon" data-program="midnight_compiler"><img src="assets/icons/msdos.png" alt="Midnight Compiler"><span>midnight_compiler</span></div>
+        <div class="desktop-icon" data-program="hidden_memories"><img src="assets/icons/briefcase.png" alt="My Briefcase"><span>.hidden_memories</span></div>
+        
+    </main>
+
+    <footer id="taskbar" class="window hidden">
+        <div id="start-menu" class="hidden">
+            <div class="start-menu-sidebar"><span>Windows</span><span>98</span></div>
+            <ul class="start-menu-items">
+                <li class="has-submenu">
+                    <img src="assets/icons/programs.png" alt=""><p><u>P</u>rograms</p>
+                    <ul class="submenu">
+                        <li data-program="ai_companion_exe"><img src="assets/icons/msdos.png" alt=""><span>MS-DOS Prompt</span></li>
+                        <li data-program="file_explorer"><img src="assets/icons/windows-explorer.png" alt=""><span>Windows Explorer</span></li>
+                    </ul>
+                </li>
+                <li data-program="my_documents">
+                     <img src="assets/icons/documents.png" alt=""><p><u>D</u>ocuments</p>
+                </li>
+                <li class="separator"></li>
+                <li data-program="run">
+                     <img src="assets/icons/run.png" alt=""><p><u>R</u>un...</p>
+                </li>
+                <li data-program="shut_down">
+                     <img src="assets/icons/shut-down.png" alt=""><p>Sh<u>u</u>t Down...</p>
+                </li>
+            </ul>
+        </div>
+        
+        <button id="start-button" class="field-row">
+            <img src="assets/icons/start-logo.png" alt="Win98 Logo">
+            <b>Start</b>
+        </button>
+        <div id="taskbar-buttons" class="sunken-panel"></div>
+        <div id="clock" class="sunken-panel"></div>
+    </footer>
+
+    <!-- Templates -->
+    <template id="window-template"><div class="window" style="position: absolute; left: 10%; top: 10%; min-width: 350px;"><div class="title-bar"><div class="title-bar-text">A Window</div><div class="title-bar-controls"><button aria-label="Minimize"></button><button aria-label="Maximize"></button><button aria-label="Close"></button></div></div><div class="window-body"></div></div></template>
+    <template id="error-template"><div class="window error-window" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 300px; z-index: 10000;"><div class="title-bar"><div class="title-bar-text">Error</div><div class="title-bar-controls"><button aria-label="Close"></button></div></div><div class="window-body" style="text-align: center; padding: 20px;"><p id="error-message"></p><button class="ok-button">OK</button></div></div></template>
+    
+    <script src="js/content.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
